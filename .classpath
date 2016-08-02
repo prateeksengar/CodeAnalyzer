@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="C:/Users/prate/Documents/salesforce/stubs/partner.jar"/>
+	<classpathentry kind="lib" path="C:/Users/prate/Documents/salesforce/stubs/tooling.jar"/>
+	<classpathentry kind="lib" path="C:/Users/prate/Documents/salesforce/stubs/wsc-uber.jar"/>
+	<classpathentry kind="lib" path="C:/Users/prate/Documents/salesforce/stubs/js-1.7R2.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.8.0_91"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
