@@ -1,5 +1,6 @@
 package com.cloudTools.codeAnlayzer;
 import java.io.BufferedReader;
+import java.io.FileWriter;
 import java.io.InputStreamReader;
 import com.sforce.soap.tooling.QueryResult;
 import com.sforce.soap.tooling.ToolingConnection;
@@ -10,11 +11,15 @@ import com.sforce.ws.ConnectionException;
 public class InitiateAnalyzer {
 	
 	private ToolingConnection toolingConnection;
+	private static final String OUTPUT_LOCATION = "C:\\Users\\prate\\Documents\\codeAnalysis.csv";
+	private static final String FILE_HEADER = "Component Name, Observation \n";
 	
+	FileWriter fileWriter = null;
+
 	//constructor
 	public InitiateAnalyzer()
 	{
-		
+
 	}
 	
 	public static void main(String[] args) {
@@ -28,7 +33,19 @@ public class InitiateAnalyzer {
 		try
 		{
 			this.toolingConnection = ToolingLoginUtil.login();
+			
+			fileWriter = new FileWriter(OUTPUT_LOCATION);
+			fileWriter.append(FILE_HEADER);
+			
 			System.out.println("Connection established \n");
+			
+			System.out.println("1: Analyze All Class");
+			System.out.println("2: Analyze Selective Class");
+			System.out.println("3: Analyze All Triggers");
+			System.out.println("4: Analyze Selective Triggers");
+			System.out.println("5: Analyze All Visualforce pages");
+			System.out.println("6: Analyze Selective Visualforce pages");
+			System.out.println("7: Search for String");
 			
 			//ask for users choice
 			String userInp = getUsersInput();
@@ -36,18 +53,20 @@ public class InitiateAnalyzer {
 			{
 				if(userInp.equals("1"))
 				{
-					System.out.println("--processing input--");
-					System.out.println("--begin anlayze all class--");
-					getAllApexClass();
+					System.out.println("-- Analyzing all Apex Classes --");
+					getAllApexClass(fileWriter);
+					fileWriter.flush();
+					fileWriter.close();
 					break;
 				}
 				else
 					if(userInp.equals("2"))
 					{
 						System.out.println("Enter Class Name: ");
-						BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-						String className = reader.readLine();
-						getSelectiveApexClass(className);
+						String className = getUsersInput();
+						getSelectiveApexClass(className, fileWriter);
+						fileWriter.flush();
+						fileWriter.close();
 						break;
 					}
 			}
@@ -65,12 +84,6 @@ public class InitiateAnalyzer {
 		String userInput = "";
 		try
 		{
-			System.out.println("1: Analyze All Class");
-			System.out.println("2: Analyze Selective Class");
-			System.out.println("3: Analyze All Triggers");
-			System.out.println("4: Analyze Selective Triggers");
-			System.out.println("5: Analyze All Visualforce pages");
-			System.out.println("6: Analyze Selective Visualforce pages");
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 			userInput = reader.readLine();
 		}
@@ -78,11 +91,11 @@ public class InitiateAnalyzer {
 		{
 			e.printStackTrace();
 		}
-		
 		return userInput;
 	}
+
 	
-	private void getAllApexClass() throws ConnectionException
+	private void getAllApexClass(FileWriter fileWriter) throws ConnectionException
 	{
 		QueryResult qr = toolingConnection.query("select Id,Name,Body,SymbolTable from ApexClass where NamespacePrefix = null order by Name");
 		Boolean done = false;
@@ -95,7 +108,7 @@ public class InitiateAnalyzer {
 				for(SObject sObj : qr.getRecords())
 				{
 					ApexClass apexCl = (ApexClass)sObj;
-					ApexClassAnalyzer.scanApexClass(apexCl,"Regular");
+					ApexClassAnalyzer.scanApexClass(apexCl,"Regular", fileWriter);
 				}
 				if (qr.isDone())
 				{
@@ -110,29 +123,17 @@ public class InitiateAnalyzer {
 		}	
 	}
 	
-	private void getSelectiveApexClass(String className) throws ConnectionException
+	private void getSelectiveApexClass(String className, FileWriter fileWriter) throws ConnectionException
 	{
 		QueryResult qr = toolingConnection.query("select Id,Name,Body,SymbolTable from ApexClass where NamespacePrefix = null and Name = '"+className+"'");
-		Boolean done = false;
 		
 		if(qr.getSize() > 0)
 		{
 			System.out.println("Total apex classes found : "+qr.getSize());
-			while(! done)
+			for(SObject sObj : qr.getRecords())
 			{
-				for(SObject sObj : qr.getRecords())
-				{
-					ApexClass apexCl = (ApexClass)sObj;
-					ApexClassAnalyzer.scanApexClass(apexCl,"Regular");
-				}
-				if (qr.isDone())
-				{
-					done = true;
-				}
-				else
-				{
-					qr = toolingConnection.queryMore(qr.getQueryLocator());
-				}
+				ApexClass apexCl = (ApexClass)sObj;
+				ApexClassAnalyzer.scanApexClass(apexCl,"Regular", fileWriter);
 			}
 			
 		}	
