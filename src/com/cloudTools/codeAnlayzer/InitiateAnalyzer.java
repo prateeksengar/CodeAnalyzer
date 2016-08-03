@@ -85,13 +85,13 @@ public class InitiateAnalyzer {
 		
 		if(qr.getSize() > 0)
 		{
-			System.out.println(qr.getSize() + " apex classes found");
+			System.out.println("Total apex classes found : "+qr.getSize());
 			while(! done)
 			{
 				for(SObject sObj : qr.getRecords())
 				{
 					ApexClass apexCl = (ApexClass)sObj;
-					ApexClassAnalyzer.scanApexClass(apexCl);
+					ApexClassAnalyzer.scanApexClass(apexCl,"Regular");
 				}
 				if (qr.isDone())
 				{

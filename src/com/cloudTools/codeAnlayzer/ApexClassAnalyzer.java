@@ -9,20 +9,38 @@ import com.sforce.soap.tooling.sobject.ApexClass;
 
 public class ApexClassAnalyzer {
 	
-	public static void scanApexClass(ApexClass apCl)
+	public static void scanApexClass(ApexClass apCl, String type)
 	{
-		//verify for invalid use of custom label
-		//checkInvalidCustomLabelUsage(apCl.getName(), apCl.getBody());
-		
 		SymbolTable apClSymTable = apCl.getSymbolTable();
 		Method[] methList = apClSymTable.getMethods();
 		
-		//verify for invalid method name
-		NamingConventionAnalyzer.checkMethodName(apCl.getName(), methList);
-		NamingConventionAnalyzer.checkClassName(apCl.getName());
+		if(type != null)
+		{
+			if(type.equalsIgnoreCase("Regular"))
+			{
+				//verify for invalid use of custom label
+				checkInvalidCustomLabelUsage(apCl.getName(), apCl.getBody());
+				
+				//verify for naming convention
+				//method name
+				NamingConventionAnalyzer.checkMethodName(apCl.getName(), methList);
+				//class name
+				NamingConventionAnalyzer.checkClassName(apCl.getName());
+				//variable name
+				
+				
+				
+				//analyze variables
+				analyzeVariables(apCl.getName(), apClSymTable);
+			}
+			else
+				if(type.equalsIgnoreCase("Search"))
+				{
+					//search for string in class
+					checkForClassContent(apCl.getName(),apCl.getBody(), "EXception EInvalid");
+				}
+		}
 		
-		//analyze variables
-		//analyzeVariables(apCl.getName(), apClSymTable);
 	}
 	
 	static void analyzeVariables(String className, SymbolTable apClSymTable)
@@ -50,6 +68,14 @@ public class ApexClassAnalyzer {
 		if(classBody.contains("== Label.") | classBody.contains("==Label.") | classBody.contains("!=Label.") | classBody.contains("!= Label."))
 		{
 			System.out.println(className + " contains invalid custom label");
+		}
+	}
+	
+	static void checkForClassContent(String className, String classBody, String content)
+	{
+		if(classBody.contains(content))
+		{
+			System.out.println("Found: "+className);
 		}
 	}
 	
