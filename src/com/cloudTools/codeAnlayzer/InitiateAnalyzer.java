@@ -46,6 +46,7 @@ public class InitiateAnalyzer {
 					{
 						System.out.println("--processing input--");
 						System.out.println("--begin anlayze selective class--");
+						getSelectiveApexClass();
 						break;
 					}
 			}
@@ -79,6 +80,34 @@ public class InitiateAnalyzer {
 	}
 	
 	private void getAllApexClass() throws ConnectionException
+	{
+		QueryResult qr = toolingConnection.query("select Id,Name,Body,SymbolTable from ApexClass where NamespacePrefix = null order by Name");
+		Boolean done = false;
+		
+		if(qr.getSize() > 0)
+		{
+			System.out.println(qr.getSize() + " apex classes found");
+			while(! done)
+			{
+				for(SObject sObj : qr.getRecords())
+				{
+					ApexClass apexCl = (ApexClass)sObj;
+					ApexClassAnalyzer.scanApexClass(apexCl);
+				}
+				if (qr.isDone())
+				{
+					done = true;
+				}
+				else
+				{
+					qr = toolingConnection.queryMore(qr.getQueryLocator());
+				}
+			}
+			
+		}	
+	}
+	
+	private void getSelectiveApexClass() throws ConnectionException
 	{
 		QueryResult qr = toolingConnection.query("select Id,Name,Body,SymbolTable from ApexClass where NamespacePrefix = null order by Name");
 		Boolean done = false;
