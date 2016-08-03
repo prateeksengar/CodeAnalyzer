@@ -67,6 +67,7 @@ public class InitiateAnalyzer {
 			System.out.println("2: Analyze Selective Class");
 			System.out.println("3: Analyze All Triggers");
 			System.out.println("4: Analyze Selective Triggers");
+			System.out.println("5: Analyze All Visualforce pages");
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 			userInput = reader.readLine();
 		}
