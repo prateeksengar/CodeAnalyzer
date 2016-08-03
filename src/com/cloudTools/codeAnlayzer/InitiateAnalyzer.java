@@ -44,8 +44,10 @@ public class InitiateAnalyzer {
 				else
 					if(userInp.equals("2"))
 					{
-						System.out.println("--processing input--");
-						System.out.println("--begin anlayze selective class--");
+						System.out.println("Enter Class Name: ");
+						BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+						String className = reader.readLine();
+						getSelectiveApexClass(className);
 						break;
 					}
 			}
@@ -68,6 +70,7 @@ public class InitiateAnalyzer {
 			System.out.println("3: Analyze All Triggers");
 			System.out.println("4: Analyze Selective Triggers");
 			System.out.println("5: Analyze All Visualforce pages");
+			System.out.println("6: Analyze Selective Visualforce pages");
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 			userInput = reader.readLine();
 		}
@@ -82,6 +85,34 @@ public class InitiateAnalyzer {
 	private void getAllApexClass() throws ConnectionException
 	{
 		QueryResult qr = toolingConnection.query("select Id,Name,Body,SymbolTable from ApexClass where NamespacePrefix = null order by Name");
+		Boolean done = false;
+		
+		if(qr.getSize() > 0)
+		{
+			System.out.println("Total apex classes found : "+qr.getSize());
+			while(! done)
+			{
+				for(SObject sObj : qr.getRecords())
+				{
+					ApexClass apexCl = (ApexClass)sObj;
+					ApexClassAnalyzer.scanApexClass(apexCl,"Regular");
+				}
+				if (qr.isDone())
+				{
+					done = true;
+				}
+				else
+				{
+					qr = toolingConnection.queryMore(qr.getQueryLocator());
+				}
+			}
+			
+		}	
+	}
+	
+	private void getSelectiveApexClass(String className) throws ConnectionException
+	{
+		QueryResult qr = toolingConnection.query("select Id,Name,Body,SymbolTable from ApexClass where NamespacePrefix = null and Name = '"+className+"'");
 		Boolean done = false;
 		
 		if(qr.getSize() > 0)
