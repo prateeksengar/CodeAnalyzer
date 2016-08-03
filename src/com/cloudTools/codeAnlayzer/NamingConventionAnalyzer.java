@@ -22,21 +22,18 @@ public class NamingConventionAnalyzer {
 			{
 				System.out.println("Name starts with _ : "+ className);
 			}
-			else
-				if(className.contains("_") && !className.endsWith("_Test"))
-				{
-					System.out.println("Name should not contain _ : "+ className);
-				}
-				else
-					if(!className.matches(namingPattern))
-					{
-						System.out.println("Name should be upperCamelCase : "+ className);
-					}
-					else
-						if(className.startsWith("Test") || className.startsWith("test"))
-						{
-							System.out.println("Name should not start with Test : "+ className);
-						}
+			if(className.contains("_") && !className.endsWith("_Test"))
+			{
+				System.out.println("Name should not contain _ : "+ className);
+			}
+			if(!className.matches(namingPattern))
+			{
+				System.out.println("Name should be upperCamelCase : "+ className);
+			}
+			if(className.startsWith("Test") || className.startsWith("test"))
+			{
+				System.out.println("Name should not start with Test : "+ className);
+			}
 		}
 	}
 	
