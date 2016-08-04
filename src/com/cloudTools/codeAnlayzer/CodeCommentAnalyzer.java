@@ -32,12 +32,11 @@ public class CodeCommentAnalyzer {
 	{
 		ArrayList<Integer> methodPosList = new ArrayList<>();
 		
+		//find out all methods of a class and get the line number
 		for(Method methodInstance: methodArray)
 		{
 			//add to list
 			methodPosList.add(methodInstance.getLocation().getLine());
-			//create method signature
-			System.out.println(className+" : "+methodInstance.getName()+" : "+ methodInstance.getLocation().getLine());
 		}
 		
 		//get list of methods
@@ -56,19 +55,60 @@ public class CodeCommentAnalyzer {
 			System.out.println("Scanning Method "+y);
 			Boolean containsComment = false;
 			
-			//iterate through lines
+			//iterate through lines and scan the method for comments
 			System.out.println("Reading lines "+methodPosList.get(counter)+" to "+methodPosList.get(counter+1));
+			
+			//varibles for code parser
+			Boolean hasMethodStarted = false;
+			Boolean hasMethodEnded = false;
+			int bracesCount = 0;
+			
 			for(int x=methodPosList.get(counter); x<methodPosList.get(counter+1); x++)
 			{	
-				System.out.println(classLines[x-1]);
-				if(classLines[x-1].contains("//"))
+				String codeLine = classLines[x-1];
+				
+				//iterate through each line and count braces
+				for(char c: codeLine.toCharArray())
+				{
+					if(hasMethodStarted && bracesCount == 0)
+					{
+						hasMethodEnded = true;
+						break;
+					}
+					else
+					{
+						if(c == '{')
+						{
+							if(hasMethodStarted == false)
+							{
+								hasMethodStarted = true;
+							}
+							bracesCount++;
+						}
+						else if(c == '}')
+							{
+								bracesCount--;
+							}
+					}
+				}
+				
+				//if method ends
+				if(hasMethodEnded)
+				{
+					break;
+				}
+				
+				//System.out.println(codeLine);
+				//look if line contains comments
+				if(codeLine.contains("//"))
 				{
 					containsComment = true;
 				}
+				
 			}
-			if(containsComment)
+			if(!containsComment)
 			{
-				System.out.println("Method"+y+" contains comment");
+				System.out.println(className+" contains method"+y+" which does not contains comment");
 			}
 			counter = counter + 1;
 		}
