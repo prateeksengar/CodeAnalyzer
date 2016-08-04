@@ -4,6 +4,8 @@ import java.io.FileWriter;
 
 import com.sforce.soap.tooling.Method;
 import com.sforce.soap.tooling.Symbol;
+import com.sforce.soap.tooling.SymbolTable;
+import com.sforce.soap.tooling.VisibilitySymbol;
 
 public class NamingConventionAnalyzer {
 
@@ -57,9 +59,24 @@ public class NamingConventionAnalyzer {
 	 * verify naming convention for variables
 	 * 1: Single variable names should be avoided
 	 */
-	static void checkVariableName(Symbol[] variableList, String clName)
+	static void checkVariableName(String clName, SymbolTable apClSymTable, FileWriter fileWriter) throws Exception
 	{
+		for(VisibilitySymbol vs: apClSymTable.getProperties())
+		{
+			if(vs.getName().length() == 1)
+			{
+				fileWriter.append(""+clName+" : "+vs.getName().length()+", Variable Name should be more than 1 character \n");
+			}
+		}
 		
+		Symbol[] variableList =  apClSymTable.getVariables();
+		for(Symbol sym: variableList)
+		{
+			if(sym.getName().length() == 1)
+			{
+				fileWriter.append(""+clName+" : "+sym.getName().length()+", Variable Name should be more than 1 character \n");
+			}
+		}
 	}
 	
 	/*
