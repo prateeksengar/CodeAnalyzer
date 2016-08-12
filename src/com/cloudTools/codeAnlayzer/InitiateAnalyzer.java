@@ -41,11 +41,7 @@ public class InitiateAnalyzer {
 			
 			System.out.println("1: Analyze All Class");
 			System.out.println("2: Analyze Selective Class");
-			System.out.println("3: Analyze All Triggers");
-			System.out.println("4: Analyze Selective Triggers");
-			System.out.println("5: Analyze All Visualforce pages");
-			System.out.println("6: Analyze Selective Visualforce pages");
-			System.out.println("7: Search for String");
+			System.out.println("3: Search for String");
 			
 			//ask for users choice
 			String userInp = getUsersInput();

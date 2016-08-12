@@ -1,8 +1,9 @@
 package com.cloudTools.codeAnlayzer;
 
 import java.io.FileWriter;
-import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.sforce.soap.tooling.Method;
 
@@ -31,28 +32,38 @@ public class CodeCommentAnalyzer {
 	static void checkMethodComment(String className, String classBody, Method[] methodArray, FileWriter fileWriter) throws Exception
 	{
 		ArrayList<Integer> methodPosList = new ArrayList<>();
+		//map to store method name and start position
+		Map<Integer,String> methodMap = new HashMap<Integer, String>();
 		
 		//find out all methods of a class and get the line number
 		for(Method methodInstance: methodArray)
 		{
 			//add to list
 			methodPosList.add(methodInstance.getLocation().getLine());
+			//add to map
+			methodMap.put(methodInstance.getLocation().getLine(), methodInstance.getName());
 		}
 		
 		//get list of methods
 		int methodCount = methodPosList.size();
-		System.out.println("contains "+methodCount+ "methods");
+		//System.out.println("contains "+methodCount+ "methods");
 		
 		//get lines of class
 		String[] classLines = classBody.split("\\r?\\n");
-		System.out.println("class contains "+classLines.length +" lines");
+		//System.out.println("class contains "+classLines.length +" lines");
 		
 		
 		int counter = 0;
 		//iterate for all methods
 		for(int y=0; y< methodCount-1; y++)
 		{
-			System.out.println("Scanning Method "+y);
+			String methodName = "";
+			if(methodMap.get(methodPosList.get(counter)) != null)
+			{
+				methodName = methodMap.get(methodPosList.get(counter));
+			}
+			
+			System.out.println("Scanning Method "+methodName);
 			Boolean containsComment = false;
 			
 			//iterate through lines and scan the method for comments
@@ -73,6 +84,9 @@ public class CodeCommentAnalyzer {
 					if(hasMethodStarted && bracesCount == 0)
 					{
 						hasMethodEnded = true;
+						//branch out to check for method comments
+						//parameter startline, endline, methodname, classBody, classname, filewriter
+						checkMethodBlockComment(x, methodPosList.get(counter+1),methodMap.get(methodPosList.get(counter+1)), classLines, className, fileWriter);
 						break;
 					}
 					else
@@ -100,7 +114,7 @@ public class CodeCommentAnalyzer {
 				
 				//System.out.println(codeLine);
 				//look if line contains comments
-				if(codeLine.contains("//"))
+				if(codeLine.contains("//") && !codeLine.contains("="))
 				{
 					containsComment = true;
 				}
@@ -108,10 +122,31 @@ public class CodeCommentAnalyzer {
 			}
 			if(!containsComment)
 			{
-				System.out.println(className+" contains method"+y+" which does not contains comment");
+				fileWriter.append(className+", contains method "+ methodName+" with no line comments \n");
 			}
 			counter = counter + 1;
 		}
 		
+	}
+	
+	/*
+	 * Analyze code block comments
+	 * 
+	 */
+	static void checkMethodBlockComment(int x, int y, String methodName, String[] classLines, String className, FileWriter fileWriter) throws Exception
+	{
+		Boolean hasComments = false;
+		for(int i=x-1; i<=y; i++)
+		{
+			if(classLines[i].contains("/**"))
+			{
+				hasComments = true;
+			}
+		}
+		
+		if(!hasComments)
+		{
+			fileWriter.append(className+", Contains Method: "+methodName+ " with no block comments \n");
+		}
 	}
 }

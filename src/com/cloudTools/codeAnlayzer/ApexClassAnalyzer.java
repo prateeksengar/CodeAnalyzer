@@ -20,11 +20,9 @@ public class ApexClassAnalyzer {
 				try
 				{
 					//Verify if class contains class comments
-					//CodeCommentAnalyzer.checkClassComment(apCl.getName(), apCl.getBody(), fileWriter);
+					CodeCommentAnalyzer.checkClassComment(apCl.getName(), apCl.getBody(), fileWriter);
 					//Verify method comments
 					CodeCommentAnalyzer.checkMethodComment(apCl.getName(), apCl.getBody(), methList, fileWriter);
-					
-					/*
 					//verify for invalid use of custom label
 					checkInvalidCustomLabelUsage(apCl.getName(), apCl.getBody(), fileWriter);
 					//verify for naming convention
@@ -33,8 +31,8 @@ public class ApexClassAnalyzer {
 					//class name
 					NamingConventionAnalyzer.checkClassName(apCl.getName(), fileWriter);
 					//variable name
-					NamingConventionAnalyzer.checkVariableName(apCl.getName(), apClSymTable, fileWriter);
-					*/
+					//NamingConventionAnalyzer.checkVariableName(apCl.getName(), apClSymTable, fileWriter);
+					
 				}
 				catch(Exception e)
 				{
