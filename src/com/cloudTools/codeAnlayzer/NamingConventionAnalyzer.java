@@ -69,14 +69,14 @@ public class NamingConventionAnalyzer {
 			}
 		}
 		
-		Symbol[] variableList =  apClSymTable.getVariables();
+		/*Symbol[] variableList =  apClSymTable.getVariables();
 		for(Symbol sym: variableList)
 		{
 			if(sym.getName().length() == 1)
 			{
 				fileWriter.append(""+clName+" : "+sym.getName().length()+", Variable Name should be more than 1 character \n");
 			}
-		}
+		}*/
 	}
 	
 	/*

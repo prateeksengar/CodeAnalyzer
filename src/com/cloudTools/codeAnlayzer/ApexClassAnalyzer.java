@@ -31,7 +31,7 @@ public class ApexClassAnalyzer {
 					//class name
 					NamingConventionAnalyzer.checkClassName(apCl.getName(), fileWriter);
 					//variable name
-					//NamingConventionAnalyzer.checkVariableName(apCl.getName(), apClSymTable, fileWriter);
+					NamingConventionAnalyzer.checkVariableName(apCl.getName(), apClSymTable, fileWriter);
 					
 				}
 				catch(Exception e)
