@@ -11,7 +11,7 @@ public class ToolingLoginUtil
 	public static ToolingConnection login() throws ConnectionException 
 	{
 		final String USERNAME = "pkumarsinghsengar@cognizant.com.full";
-        final String PASSWORD = "Cognizant890djaoIS1hBYDP523JUg6FrTv6"; 
+        final String PASSWORD = ""; 
         
         final String URL = "https://wu--full.cs2.my.salesforce.com/services/Soap/u/37.0";
         System.out.println(URL);
