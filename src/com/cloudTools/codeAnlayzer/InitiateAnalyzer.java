@@ -39,9 +39,16 @@ public class InitiateAnalyzer {
 			
 			System.out.println("Connection established \n");
 			
-			System.out.println("1: Analyze All Class");
+			System.out.println("---------------------------------------------------------");
+			System.out.println("---------------------------------------------------------");
+			System.out.println("STATIC CODE ANALYZER");
+			System.out.println("CHECKS FOR COMMENTS (CLASS / METHOD)");
+			System.out.println("CHECKS FOR CUSTOM LABEL USE IN EXPRESSION");
+			System.out.println("CHECKS FOR NAMING CONVENTION (CLASS / METHOD / PROPERTIES)");
+			System.out.println("---------------------------------------------------------");
+			System.out.println("---------------------------------------------------------");
+			System.out.println("1: Analyze All Code");
 			System.out.println("2: Analyze Selective Class");
-			System.out.println("3: Search for String");
 			
 			//ask for users choice
 			String userInp = getUsersInput();
@@ -49,7 +56,8 @@ public class InitiateAnalyzer {
 			{
 				if(userInp.equals("1"))
 				{
-					System.out.println("-- Analyzing all Apex Classes --");
+					System.out.println("---------------------------------------------------------");
+					System.out.println("ANALYZING ALL CLASSES");
 					getAllApexClass(fileWriter);
 					fileWriter.flush();
 					fileWriter.close();
