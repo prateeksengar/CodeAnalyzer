@@ -15,7 +15,7 @@ public class ToolingLoginUtil
 	public static ToolingConnection login() throws ConnectionException 
 	{
 		Scanner reader = new Scanner(System.in);
-		
+		//ask for users input
 		System.out.println("ENTER USERNAME: ");
 		final String USERNAME = reader.nextLine();
 		System.out.println("ENTER PASSWORD: ");
