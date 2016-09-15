@@ -1,5 +1,9 @@
 package com.cloudTools.codeAnlayzer;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.Scanner;
+
 import com.sforce.soap.partner.LoginResult;
 import com.sforce.soap.partner.PartnerConnection;
 import com.sforce.soap.tooling.ToolingConnection;
@@ -10,8 +14,12 @@ public class ToolingLoginUtil
 {
 	public static ToolingConnection login() throws ConnectionException 
 	{
-		final String USERNAME = "pkumarsinghsengar@cognizant.com.full";
-        final String PASSWORD = ""; 
+		Scanner reader = new Scanner(System.in);
+		
+		System.out.println("ENTER USERNAME: ");
+		final String USERNAME = reader.nextLine();
+		System.out.println("ENTER PASSWORD: ");
+		final String PASSWORD = reader.nextLine(); 
         
         final String URL = "https://wu--full.cs2.my.salesforce.com/services/Soap/u/37.0";
         System.out.println(URL);
@@ -36,5 +44,7 @@ public class ToolingLoginUtil
         config.setManualLogin(true);
         return (new PartnerConnection(config)).login(username, password);
     }
+    
+
 
 }
