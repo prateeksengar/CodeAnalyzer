@@ -69,14 +69,6 @@ public class NamingConventionAnalyzer {
 			}
 		}
 		
-		/*Symbol[] variableList =  apClSymTable.getVariables();
-		for(Symbol sym: variableList)
-		{
-			if(sym.getName().length() == 1)
-			{
-				fileWriter.append(""+clName+" : "+sym.getName().length()+", Variable Name should be more than 1 character \n");
-			}
-		}*/
 	}
 	
 	/*
@@ -96,7 +88,7 @@ public class NamingConventionAnalyzer {
 				if(!methodInstance.getName().startsWith("is") && !methodInstance.getName().startsWith("has"))
 				{
 					System.out.println(methodInstance.getName() + " method name should start with is or has");
-					fileWriter.append(""+className+" : "+methodInstance.getName()+", Method Name should start with is or has \n");
+					fileWriter.append(""+className+", Contains method "+methodInstance.getName()+" the method name should start with is or has \n");
 				}
 			}
 			
@@ -105,7 +97,7 @@ public class NamingConventionAnalyzer {
 			if(!methodInstance.getName().matches(namingPattern))
 			{
 				System.out.println(methodInstance.getName() + " method name should be camel case");
-				fileWriter.append(""+className+" : "+methodInstance.getName()+", Method Name should be in lowerCamelCase \n");
+				fileWriter.append(""+className+", Contains method "+methodInstance.getName()+" the method Name should be in lowerCamelCase \n");
 			}
 			
 		}

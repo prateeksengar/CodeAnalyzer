@@ -122,7 +122,7 @@ public class CodeCommentAnalyzer {
 			}
 			if(!containsComment)
 			{
-				fileWriter.append(className+", contains method "+ methodName+" with no line comments \n");
+				fileWriter.append(className+", Contains method "+ methodName+" with no line comments \n");
 			}
 			counter = counter + 1;
 		}

@@ -18,7 +18,7 @@ public class ApexCodeAnalyzer {
 		methodCount = methodArray.length;
 		if(methodCount > MAX_METHOD_COUNT)
 		{
-			fileWriter.append(className+", contains "+ methodCount+" methods try refactoring the class \n");
+			fileWriter.append(className+", Contains "+ methodCount+" methods try refactoring the class \n");
 		}
 	}
 	
@@ -31,7 +31,7 @@ public class ApexCodeAnalyzer {
 		lineOfCode = apCl.getLengthWithoutComments();
 		if(lineOfCode > MAX_LINE_COUNT)
 		{
-			fileWriter.append(apCl.getName()+", contains "+ lineOfCode+" lines of code try refactoring the class \n");
+			fileWriter.append(apCl.getName()+", Contains "+ lineOfCode+" lines of code try refactoring the class \n");
 		}
 	}
 	
@@ -47,7 +47,7 @@ public class ApexCodeAnalyzer {
 			parameterCount = methodInstance.getParameters().length;
 			if(parameterCount > MAX_PARAMETER_COUNT)
 			{
-				fileWriter.append(className+", contains method with "+ parameterCount + " parameters try refactoring the method \n");
+				fileWriter.append(className+", Contains method with "+ parameterCount + " parameters try refactoring the method \n");
 			}
 		}
 				
@@ -58,17 +58,33 @@ public class ApexCodeAnalyzer {
 	 */
 	static void checkUnnecessaryComparison(String className, String classBody, FileWriter fileWriter) throws Exception
 	{
-		if(classBody.contains("== false") || classBody.contains("!= false") || classBody.contains("== true") || classBody.contains("!= tru"))
+		
+		Integer lineNumber = 0;
+		String[] classLines = classBody.split("\\r?\\n");
+		for(String clLine: classLines)
 		{
-			Integer lineNumber = 0;
-			String[] classLines = classBody.split("\\r?\\n");
-			for(String clLine: classLines)
+			lineNumber++;
+			if(clLine.contains("== false") || clLine.contains("!= false") || clLine.contains("== true") || clLine.contains("!= true"))
 			{
-				lineNumber++;
-				if(clLine.contains("== false") || clLine.contains("!= false") || clLine.contains("== true") || clLine.contains("!= true"))
-				{
-					fileWriter.append(className+" "+", contains line # "+lineNumber+"with unnecessary comparison operation \n");
-				}
+				fileWriter.append(className+" "+", Contains line # "+lineNumber+" with unnecessary comparison operation \n");
+			}
+		}
+		
+	}
+	
+	/*
+	 * Find empty catch block 
+	 */
+	static void checkEmptyCatchBlock(String className, String classBody, FileWriter fileWriter) throws Exception
+	{
+		Integer lineNumber = 0;
+		String[] classLines = classBody.split("\\r?\\n");
+		for(String clsLine: classLines)
+		{
+			lineNumber++;
+			if(clsLine.contains("catch") || clsLine.contains("Catch"))
+			{
+				fileWriter.append(className+" , Contains catch block at "+lineNumber+"# \n");
 			}
 		}
 	}
