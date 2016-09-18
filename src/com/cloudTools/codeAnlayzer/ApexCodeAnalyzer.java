@@ -58,7 +58,19 @@ public class ApexCodeAnalyzer {
 	 */
 	static void checkUnnecessaryComparison(String className, String classBody, FileWriter fileWriter) throws Exception
 	{
-		
+		if(classBody.contains("== false") || classBody.contains("!= false") || classBody.contains("== true") || classBody.contains("!= tru"))
+		{
+			Integer lineNumber = 0;
+			String[] classLines = classBody.split("\\r?\\n");
+			for(String clLine: classLines)
+			{
+				lineNumber++;
+				if(clLine.contains("== false") || clLine.contains("!= false") || clLine.contains("== true") || clLine.contains("!= true"))
+				{
+					fileWriter.append(className+" "+", contains line # "+lineNumber+"with unnecessary comparison operation \n");
+				}
+			}
+		}
 	}
 
 }

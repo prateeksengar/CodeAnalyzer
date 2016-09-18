@@ -38,9 +38,13 @@ public class ApexClassAnalyzer {
 					ApexCodeAnalyzer.checkTooManyLineCode(apCl, fileWriter);
 					//check for empty try catch
 					ApexCodeAnalyzer.checkTooManyParameters(apCl.getName(), methList, fileWriter);
+					//check empty catch block
+					
+					//check empty method
+					
 					//check for unused methods
 					
-					//check for unecessary comparison
+					//check for unnecessary comparison
 					ApexCodeAnalyzer.checkUnnecessaryComparison(apCl.getName(), apCl.getBody(), fileWriter);
 					
 				}

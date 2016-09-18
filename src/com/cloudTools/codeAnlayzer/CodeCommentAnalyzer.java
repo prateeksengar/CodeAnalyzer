@@ -38,7 +38,7 @@ public class CodeCommentAnalyzer {
 		//find out all methods of a class and get the line number
 		for(Method methodInstance: methodArray)
 		{
-			//add to list
+		    //add to list
 			methodPosList.add(methodInstance.getLocation().getLine());
 			//add to map
 			methodMap.put(methodInstance.getLocation().getLine(), methodInstance.getName());
