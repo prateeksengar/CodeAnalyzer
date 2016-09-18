@@ -3,6 +3,7 @@ package com.cloudTools.codeAnlayzer;
 import java.io.FileWriter;
 
 import com.sforce.soap.tooling.Method;
+import com.sforce.soap.tooling.Symbol;
 import com.sforce.soap.tooling.SymbolTable;
 import com.sforce.soap.tooling.sobject.ApexClass;
 
@@ -40,7 +41,7 @@ public class ApexClassAnalyzer {
 					//check for unused methods
 					
 					//check for unecessary comparison
-					
+					ApexCodeAnalyzer.checkUnnecessaryComparison(apCl.getName(), apCl.getBody(), fileWriter);
 					
 				}
 				catch(Exception e)

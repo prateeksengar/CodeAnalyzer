@@ -7,8 +7,8 @@ import com.sforce.soap.tooling.sobject.ApexClass;
 
 public class ApexCodeAnalyzer {
 	private static final Integer MAX_METHOD_COUNT = 10;
-	private static final Integer MAX_LINE_COUNT = 650;
-	private static final Integer MAX_PARAMETER_COUNT = 3;
+	private static final Integer MAX_LINE_COUNT = 15000;
+	private static final Integer MAX_PARAMETER_COUNT = 5;
 	/*
 	 * Analyze too many methods
 	 */
@@ -51,6 +51,14 @@ public class ApexCodeAnalyzer {
 			}
 		}
 				
+	}
+	
+	/*
+	 * Analyze unnecessary comparison
+	 */
+	static void checkUnnecessaryComparison(String className, String classBody, FileWriter fileWriter) throws Exception
+	{
+		
 	}
 
 }
