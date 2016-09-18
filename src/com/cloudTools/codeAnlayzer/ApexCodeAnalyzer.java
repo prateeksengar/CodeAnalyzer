@@ -6,9 +6,6 @@ import com.sforce.soap.tooling.Method;
 import com.sforce.soap.tooling.sobject.ApexClass;
 
 public class ApexCodeAnalyzer {
-	private static final Integer MAX_METHOD_COUNT = 10;
-	private static final Integer MAX_LINE_COUNT = 15000;
-	private static final Integer MAX_PARAMETER_COUNT = 5;
 	/*
 	 * Analyze too many methods
 	 */
@@ -16,7 +13,7 @@ public class ApexCodeAnalyzer {
 	{
 		Integer methodCount = 0;
 		methodCount = methodArray.length;
-		if(methodCount > MAX_METHOD_COUNT)
+		if(methodCount > ProjectConstants.MAX_METHOD_COUNT)
 		{
 			fileWriter.append(className+", Contains "+ methodCount+" methods try refactoring the class \n");
 		}
@@ -29,7 +26,7 @@ public class ApexCodeAnalyzer {
 	{
 		Integer lineOfCode = 0;
 		lineOfCode = apCl.getLengthWithoutComments();
-		if(lineOfCode > MAX_LINE_COUNT)
+		if(lineOfCode > ProjectConstants.MAX_LINE_COUNT)
 		{
 			fileWriter.append(apCl.getName()+", Contains "+ lineOfCode+" lines of code try refactoring the class \n");
 		}
@@ -45,7 +42,7 @@ public class ApexCodeAnalyzer {
 		for(Method methodInstance: methodArray)
 		{
 			parameterCount = methodInstance.getParameters().length;
-			if(parameterCount > MAX_PARAMETER_COUNT)
+			if(parameterCount > ProjectConstants.MAX_PARAMETER_COUNT)
 			{
 				fileWriter.append(className+", Contains method with "+ parameterCount + " parameters try refactoring the method \n");
 			}

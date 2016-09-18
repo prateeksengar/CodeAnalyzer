@@ -1,8 +1,8 @@
 package com.cloudTools.codeAnlayzer;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.Scanner;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.Properties;
 
 import com.sforce.soap.partner.LoginResult;
 import com.sforce.soap.partner.PartnerConnection;
@@ -12,16 +12,16 @@ import com.sforce.ws.ConnectorConfig;
 
 public class ToolingLoginUtil 
 {
-	public static ToolingConnection login() throws ConnectionException 
+	public static ToolingConnection login() throws Exception 
 	{
-		Scanner reader = new Scanner(System.in);
+		Properties prop = new Properties();
+		InputStream input = new FileInputStream("config.properties");
+		prop.load(input);
+		
 		//ask for users input
-		System.out.println("ENTER USERNAME: ");
-		final String USERNAME = reader.nextLine();
-		System.out.println("ENTER PASSWORD: ");
-		final String PASSWORD = reader.nextLine(); 
-        
-        final String URL = "https://wu--full.cs2.my.salesforce.com/services/Soap/u/37.0";
+		final String USERNAME = prop.getProperty("sfuser");
+		final String PASSWORD = prop.getProperty("sfpassword");
+        final String URL = prop.getProperty("sfurl");
         System.out.println(URL);
         final LoginResult loginResult = loginToSalesforce(USERNAME, PASSWORD, URL);
         return createToolingConnection(loginResult);

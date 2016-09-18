@@ -11,8 +11,7 @@ import com.sforce.ws.ConnectionException;
 public class InitiateAnalyzer {
 	
 	private ToolingConnection toolingConnection;
-	private static final String OUTPUT_LOCATION = "C:\\Users\\prate\\Documents\\codeAnalysis.csv";
-	private static final String FILE_HEADER = "Component Name, Observation \n";
+	
 	
 	FileWriter fileWriter = null;
 
@@ -34,8 +33,8 @@ public class InitiateAnalyzer {
 		{
 			this.toolingConnection = ToolingLoginUtil.login();
 			
-			fileWriter = new FileWriter(OUTPUT_LOCATION);
-			fileWriter.append(FILE_HEADER);
+			fileWriter = new FileWriter(ProjectConstants.OUTPUT_LOCATION);
+			fileWriter.append(ProjectConstants.FILE_HEADER);
 			
 			System.out.println("Connection established \n");
 			
