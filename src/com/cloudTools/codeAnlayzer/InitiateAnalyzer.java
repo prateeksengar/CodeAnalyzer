@@ -49,7 +49,7 @@ public class InitiateAnalyzer {
 			System.out.println("---------------------------------------------------------");
 			System.out.println("1: Analyze All Code");
 			System.out.println("2: Analyze Selective Class");
-			
+			System.out.println("Your Choice: ");
 			//ask for users choice
 			String userInp = getUsersInput();
 			while(userInp != null && !userInp.equals("99"))

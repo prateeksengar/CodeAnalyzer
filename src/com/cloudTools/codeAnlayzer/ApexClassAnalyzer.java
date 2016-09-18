@@ -31,7 +31,7 @@ public class ApexClassAnalyzer {
 					//variable name
 					NamingConventionAnalyzer.checkVariableName(apCl.getName(), apClSymTable, fileWriter);
 					//verify for invalid use of custom label
-					checkInvalidCustomLabelUsage(apCl.getName(), apCl.getBody(), fileWriter);
+					ApexCodeAnalyzer.checkInvalidCustomLabelUsage(apCl.getName(), apCl.getBody(), fileWriter);
 					//verify class with too many methods
 					ApexCodeAnalyzer.checkTooManyMethod(apCl.getName(), apCl.getBody(), methList, fileWriter);
 					//verify class with too many lines of code
@@ -57,29 +57,16 @@ public class ApexClassAnalyzer {
 				if(type.equalsIgnoreCase("Search"))
 				{
 					//search for string in class
-					checkForClassContent(apCl.getName(),apCl.getBody(), "EXception EInvalid");
+					ApexCodeAnalyzer.checkForClassContent(apCl.getName(),apCl.getBody(), "Ecception Invalid");
 				}
 		}
 		
 	}
 	
 	
-	static void checkInvalidCustomLabelUsage(String className, String classBody, FileWriter fileWriter) throws Exception
-	{
-		if(classBody.contains("== Label.") | classBody.contains("==Label.") | classBody.contains("!=Label.") | classBody.contains("!= Label."))
-		{
-			System.out.println(className + " contains invalid custom label");
-			fileWriter.append(""+className+", Class contains Custom Label in logical expression \n");
-		}
-	}
 	
-	static void checkForClassContent(String className, String classBody, String content)
-	{
-		if(classBody.contains(content))
-		{
-			System.out.println("Found: "+className);
-		}
-	}
+	
+	
 	
 	
 

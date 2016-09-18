@@ -88,5 +88,28 @@ public class ApexCodeAnalyzer {
 			}
 		}
 	}
+	
+	/*
+	 * Check for custom labels in apex code
+	 */
+	static void checkInvalidCustomLabelUsage(String className, String classBody, FileWriter fileWriter) throws Exception
+	{
+		if(classBody.contains("== Label.") | classBody.contains("==Label.") | classBody.contains("!=Label.") | classBody.contains("!= Label."))
+		{
+			System.out.println(className + " contains invalid custom label");
+			fileWriter.append(""+className+", Class contains Custom Label in logical expression \n");
+		}
+	}
+	
+	/*
+	 * Search for content
+	 */
+	static void checkForClassContent(String className, String classBody, String content)
+	{
+		if(classBody.contains(content))
+		{
+			System.out.println("Found: "+className);
+		}
+	}
 
 }
