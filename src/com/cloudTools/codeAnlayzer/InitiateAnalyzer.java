@@ -101,7 +101,7 @@ public class InitiateAnalyzer {
 	
 	private void getAllApexClass(FileWriter fileWriter) throws ConnectionException
 	{
-		QueryResult qr = toolingConnection.query("select Id,Name,Body,SymbolTable from ApexClass where NamespacePrefix = null order by Name");
+		QueryResult qr = toolingConnection.query("select Id,Name,Body,SymbolTable from ApexClass where NamespacePrefix = null order by Name limit 10");
 		Boolean done = false;
 		
 		if(qr.getSize() > 0)

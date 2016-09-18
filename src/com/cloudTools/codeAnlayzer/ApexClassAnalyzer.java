@@ -23,15 +23,24 @@ public class ApexClassAnalyzer {
 					CodeCommentAnalyzer.checkClassComment(apCl.getName(), apCl.getBody(), fileWriter);
 					//Verify method comments
 					CodeCommentAnalyzer.checkMethodComment(apCl.getName(), apCl.getBody(), methList, fileWriter);
-					//verify for invalid use of custom label
-					checkInvalidCustomLabelUsage(apCl.getName(), apCl.getBody(), fileWriter);
-					//verify for naming convention
 					//method name
 					NamingConventionAnalyzer.checkMethodName(apCl.getName(), methList, fileWriter);
 					//class name
 					NamingConventionAnalyzer.checkClassName(apCl.getName(), fileWriter);
 					//variable name
 					NamingConventionAnalyzer.checkVariableName(apCl.getName(), apClSymTable, fileWriter);
+					//verify for invalid use of custom label
+					checkInvalidCustomLabelUsage(apCl.getName(), apCl.getBody(), fileWriter);
+					//verify class with too many methods
+					ApexCodeAnalyzer.checkTooManyMethod(apCl.getName(), apCl.getBody(), methList, fileWriter);
+					//verify class with too many lines of code
+					ApexCodeAnalyzer.checkTooManyLineCode(apCl, fileWriter);
+					//check for empty try catch
+					ApexCodeAnalyzer.checkTooManyParameters(apCl.getName(), methList, fileWriter);
+					//check for unused methods
+					
+					//check for unecessary comparison
+					
 					
 				}
 				catch(Exception e)
