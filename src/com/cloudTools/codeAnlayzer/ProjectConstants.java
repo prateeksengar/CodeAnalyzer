@@ -6,5 +6,6 @@ public class ProjectConstants {
 	static final Integer MAX_METHOD_COUNT = 10;
 	static final Integer MAX_LINE_COUNT = 15000;
 	static final Integer MAX_PARAMETER_COUNT = 5;
+	static final Integer MAX_LINE_COUNT_TRG = 500;
 
 }

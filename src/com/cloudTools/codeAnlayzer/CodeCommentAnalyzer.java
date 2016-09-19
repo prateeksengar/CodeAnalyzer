@@ -26,6 +26,19 @@ public class CodeCommentAnalyzer {
 	}
 	
 	/*
+	 * Analyze Class Comment
+	 * 
+	 */
+	static void checkTriggerComment(String trgName, String trgBody, FileWriter fileWriter) throws Exception
+	{
+		//check if class has class level commments
+		if(!trgBody.trim().startsWith("/**"))
+		{
+			fileWriter.append(trgName+", Trigger doesn't contains class comments \n");
+		}
+	}
+	
+	/*
 	 * Analyze method comments
 	 * 
 	 */
@@ -67,7 +80,6 @@ public class CodeCommentAnalyzer {
 			Boolean containsComment = false;
 			
 			//iterate through lines and scan the method for comments
-			System.out.println("Reading lines "+methodPosList.get(counter)+" to "+methodPosList.get(counter+1));
 			
 			//varibles for code parser
 			Boolean hasMethodStarted = false;

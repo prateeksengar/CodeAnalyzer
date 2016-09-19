@@ -4,6 +4,7 @@ import java.io.FileWriter;
 
 import com.sforce.soap.tooling.Method;
 import com.sforce.soap.tooling.sobject.ApexClass;
+import com.sforce.soap.tooling.sobject.ApexTrigger;
 
 public class ApexCodeAnalyzer {
 	/*
@@ -29,6 +30,19 @@ public class ApexCodeAnalyzer {
 		if(lineOfCode > ProjectConstants.MAX_LINE_COUNT)
 		{
 			fileWriter.append(apCl.getName()+", Contains "+ lineOfCode+" lines of code try refactoring the class \n");
+		}
+	}
+	
+	/*
+	 * Analyze too many lines of code in Trigger
+	 */
+	static void checkTooManyLineTrg(ApexTrigger apTrg, FileWriter fileWriter) throws Exception
+	{
+		Integer lineOfCode = 0;
+		lineOfCode = apTrg.getLengthWithoutComments();
+		if(lineOfCode > ProjectConstants.MAX_LINE_COUNT_TRG)
+		{
+			fileWriter.append(apTrg.getName()+", Contains "+ lineOfCode+" lines of code try refactoring the class \n");
 		}
 	}
 	

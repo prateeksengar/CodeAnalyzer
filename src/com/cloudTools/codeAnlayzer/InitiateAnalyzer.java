@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import com.sforce.soap.tooling.QueryResult;
 import com.sforce.soap.tooling.ToolingConnection;
 import com.sforce.soap.tooling.sobject.ApexClass;
+import com.sforce.soap.tooling.sobject.ApexTrigger;
 import com.sforce.soap.tooling.sobject.SObject;
 import com.sforce.ws.ConnectionException;
 
@@ -57,7 +58,8 @@ public class InitiateAnalyzer {
 				{
 					System.out.println("---------------------------------------------------------");
 					System.out.println("ANALYZING ALL CLASSES");
-					getAllApexClass(fileWriter);
+					//getAllApexClass(fileWriter);
+					getAllTrigger(fileWriter);
 					fileWriter.flush();
 					fileWriter.close();
 					break;
@@ -97,6 +99,33 @@ public class InitiateAnalyzer {
 		return userInput;
 	}
 
+	
+	private void getAllTrigger(FileWriter fileWriter) throws ConnectionException
+	{
+		QueryResult qr = toolingConnection.query("select Id,Name,EntityDefinitionId,LengthWithoutComments,Body from ApexTrigger where NamespacePrefix = null order by Name");
+		Boolean done = false;
+		
+		if(qr.getSize() > 0)
+		{
+			System.out.println("Total apex trigger found : "+qr.getSize());
+			while(! done)
+			{
+				for(SObject sObj: qr.getRecords())
+				{
+					ApexTrigger apexTrg = (ApexTrigger)sObj;
+					ApexTriggerAnalyzer.scanApexTrigger(apexTrg, fileWriter);
+				}
+				if (qr.isDone())
+				{
+					done = true;
+				}
+				else
+				{
+					qr = toolingConnection.queryMore(qr.getQueryLocator());
+				}
+			}
+		}
+	}
 	
 	private void getAllApexClass(FileWriter fileWriter) throws ConnectionException
 	{

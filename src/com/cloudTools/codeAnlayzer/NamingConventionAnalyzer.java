@@ -3,7 +3,6 @@ package com.cloudTools.codeAnlayzer;
 import java.io.FileWriter;
 
 import com.sforce.soap.tooling.Method;
-import com.sforce.soap.tooling.Symbol;
 import com.sforce.soap.tooling.SymbolTable;
 import com.sforce.soap.tooling.VisibilitySymbol;
 
@@ -43,6 +42,33 @@ public class NamingConventionAnalyzer {
 				fileWriter.append(""+className+", Class Name should not start with Test \n");
 			}
 		}
+	}
+	
+	/*
+	 * Verify naming convention for trigger name
+	 * 1: UpperCamelCase should be used
+	 * 2: Name should start with capital
+	 * 3: Underscores should be avoided
+	 */
+	static void checkTriggerName(String trgName, FileWriter fileWriter) throws Exception
+	{
+		String namingPattern = "[A-Z]+[a-z0-9]+[A-Za-z0-9]*";
+		if(trgName.startsWith("_"))
+		{
+			System.out.println("Name starts with _ : "+ trgName);
+			fileWriter.append(""+trgName+", Class Name starts with _ \n");
+		}
+		if(trgName.contains("_"))
+		{
+			System.out.println("Name should not contain _ : "+ trgName);
+			fileWriter.append(""+trgName+", Class Name contains _ \n");
+		}
+		if(!trgName.matches(namingPattern))
+		{
+			System.out.println("Name should be upperCamelCase : "+ trgName);
+			fileWriter.append(""+trgName+", Class Name should be in UpperCamelCase \n");
+		}
+			
 	}
 	
 	/*
