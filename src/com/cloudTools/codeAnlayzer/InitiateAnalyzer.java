@@ -58,7 +58,7 @@ public class InitiateAnalyzer {
 				{
 					System.out.println("---------------------------------------------------------");
 					System.out.println("ANALYZING ALL CLASSES");
-					//getAllApexClass(fileWriter);
+					getAllApexClass(fileWriter);
 					getAllTrigger(fileWriter);
 					fileWriter.flush();
 					fileWriter.close();
@@ -102,7 +102,7 @@ public class InitiateAnalyzer {
 	
 	private void getAllTrigger(FileWriter fileWriter) throws ConnectionException
 	{
-		QueryResult qr = toolingConnection.query("select Id,Name,EntityDefinitionId,LengthWithoutComments,Body from ApexTrigger where NamespacePrefix = null order by Name");
+		QueryResult qr = toolingConnection.query("select Id, Name, EntityDefinitionId, LengthWithoutComments, Body from ApexTrigger where NamespacePrefix = null order by Name");
 		Boolean done = false;
 		
 		if(qr.getSize() > 0)
@@ -129,7 +129,7 @@ public class InitiateAnalyzer {
 	
 	private void getAllApexClass(FileWriter fileWriter) throws ConnectionException
 	{
-		QueryResult qr = toolingConnection.query("select Id,Name,LengthWithoutComments,Body,SymbolTable from ApexClass where NamespacePrefix = null order by Name limit 50");
+		QueryResult qr = toolingConnection.query("select Id, Name, Body, SymbolTable,LengthWithoutComments from ApexClass where NamespacePrefix = null order by Name");
 		Boolean done = false;
 		
 		if(qr.getSize() > 0)
@@ -157,7 +157,7 @@ public class InitiateAnalyzer {
 	
 	private void getSelectiveApexClass(String className, FileWriter fileWriter) throws ConnectionException
 	{
-		QueryResult qr = toolingConnection.query("select Id,Name,Body,SymbolTable from ApexClass where NamespacePrefix = null and Name = '"+className+"'");
+		QueryResult qr = toolingConnection.query("select Id,Name,Body,SymbolTable,LengthWithoutComments from ApexClass where NamespacePrefix = null and Name = '"+className+"'");
 		
 		if(qr.getSize() > 0)
 		{

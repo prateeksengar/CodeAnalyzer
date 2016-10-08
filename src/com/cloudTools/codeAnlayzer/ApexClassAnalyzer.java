@@ -10,15 +10,19 @@ public class ApexClassAnalyzer {
 	
 	public static void scanApexClass(ApexClass apCl, String type, FileWriter fileWriter)
 	{
-		SymbolTable apClSymTable = apCl.getSymbolTable();
-		Method[] methList = apClSymTable.getMethods();
-		
-		if(type != null)
+		try
 		{
-			if(type.equalsIgnoreCase("Regular"))
+			System.out.println("---------------------------------------------------------");
+			System.out.println("SCANNING "+apCl.getName());
+			SymbolTable apClSymTable = apCl.getSymbolTable();
+			
+			Method[] methList = apClSymTable.getMethods();
+			
+			if(type != null)
 			{
-				try
+				if(type.equalsIgnoreCase("Regular"))
 				{
+					
 					//Verify if class contains class comments
 					CodeCommentAnalyzer.checkClassComment(apCl.getName(), apCl.getBody(), fileWriter);
 					//Verify method comments
@@ -39,34 +43,26 @@ public class ApexClassAnalyzer {
 					ApexCodeAnalyzer.checkTooManyParameters(apCl.getName(), methList, fileWriter);
 					//check empty catch block
 					
-					//check empty method
-					
-					//check for unused methods
-					
 					//check for unnecessary comparison
 					ApexCodeAnalyzer.checkUnnecessaryComparison(apCl.getName(), apCl.getBody(), fileWriter);
 					
 				}
-				catch(Exception e)
-				{
-					e.printStackTrace();
-				}
-			}
-			else
+				else
 				if(type.equalsIgnoreCase("Search"))
 				{
 					//search for string in class
 					ApexCodeAnalyzer.checkForClassContent(apCl.getName(),apCl.getBody(), "Ecception Invalid");
 				}
+			}
+			
+		}
+		catch(Exception e)
+		{
+			System.out.println("Exception :"+e.getMessage());
+			
 		}
 		
 	}
 	
 	
-	
-	
-	
-	
-	
-
 }
