@@ -37,7 +37,7 @@ public class InitiateAnalyzer {
 			fileWriter = new FileWriter(ProjectConstants.OUTPUT_LOCATION);
 			fileWriter.append(ProjectConstants.FILE_HEADER);
 			
-			System.out.println("Connection established \n");
+			System.out.println("Connection Established\n");
 			
 			System.out.println("---------------------------------------------------------");
 			System.out.println("---------------------------------------------------------");

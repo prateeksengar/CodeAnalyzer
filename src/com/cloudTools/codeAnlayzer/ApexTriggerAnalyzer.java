@@ -9,7 +9,8 @@ public class ApexTriggerAnalyzer {
 	{
 		try
 		{
-			System.out.println("Apex Name "+apTrg.getName()+" Entity id "+apTrg.getEntityDefinitionId());
+			System.out.println("---------------------------------------------------------");
+			System.out.println("SCANNING "+apTrg.getName());
 			//verify trigger naming convention
 			NamingConventionAnalyzer.checkTriggerName(apTrg.getName(),fileWriter);
 			//verify trigger comments

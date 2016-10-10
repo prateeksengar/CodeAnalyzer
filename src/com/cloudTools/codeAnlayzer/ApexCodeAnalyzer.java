@@ -83,22 +83,6 @@ public class ApexCodeAnalyzer {
 		
 	}
 	
-	/*
-	 * Find empty catch block 
-	 */
-	static void checkEmptyCatchBlock(String className, String classBody, FileWriter fileWriter) throws Exception
-	{
-		Integer lineNumber = 0;
-		String[] classLines = classBody.split("\\r?\\n");
-		for(String clsLine: classLines)
-		{
-			lineNumber++;
-			if(clsLine.contains("catch") || clsLine.contains("Catch"))
-			{
-				fileWriter.append(className+" , Contains catch block at "+lineNumber+"# \n");
-			}
-		}
-	}
 	
 	/*
 	 * Check for custom labels in apex code
@@ -111,6 +95,8 @@ public class ApexCodeAnalyzer {
 			fileWriter.append(""+className+", Class contains Custom Label in logical expression \n");
 		}
 	}
+	
+	
 	
 	/*
 	 * Search for content
